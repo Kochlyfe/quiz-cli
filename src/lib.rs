@@ -7,7 +7,7 @@ pub struct Prompts {
 }
 
 pub mod test {
-    use crate::dialogues::latency;
+    use crate::dialogues::{latency, po2};
     use crate::Prompts;
     use clap::Parser;
 
@@ -21,7 +21,7 @@ pub mod test {
         pub fn generate(self: Self) -> Vec<Prompts> {
             match self {
                 Mode::Latency => return latency::latency_questions(),
-                Mode::Po2 => return vec![],
+                Mode::Po2 => return po2::po2_questions(),
             }
         }
     }
