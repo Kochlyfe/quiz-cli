@@ -1,11 +1,15 @@
 use clap::Parser;
-use cstrainer::test::{Cli, Mode};
+use cstrainer::dialogues::generate_dialogues;
+use cstrainer::test::{format_answers, Cli, Mode};
 
 fn main() {
     let args = Cli::parse();
 
-    match args.mode {
-        Mode::Latency => println!("{:?}", Mode::generate(&Mode::Latency)),
-        Mode::Po2 => println!("po2"),
-    }
+    let questions = match args.mode {
+        Mode::Latency => Mode::Latency.generate(),
+        Mode::Po2 => Mode::Po2.generate(),
+    };
+
+    let wrong_answers = generate_dialogues(questions);
+    format_answers(wrong_answers);
 }

@@ -1,4 +1,10 @@
-mod dialogues;
+pub mod dialogues;
+
+#[derive(Debug)]
+pub struct Prompts {
+    pub question: String,
+    pub answer: String,
+}
 
 pub mod test {
     use crate::dialogues::latency;
@@ -12,7 +18,7 @@ pub mod test {
     }
 
     impl Mode {
-        pub fn generate(&self) -> Vec<Prompts> {
+        pub fn generate(self: Self) -> Vec<Prompts> {
             match self {
                 Mode::Latency => return latency::latency_questions(),
                 Mode::Po2 => return vec![],
@@ -26,10 +32,19 @@ pub mod test {
         #[clap(short, long, value_enum)]
         pub mode: Mode,
     }
-}
 
-#[derive(Debug)]
-pub struct Prompts {
-    pub question: String,
-    pub answer: String,
+    pub fn format_answers(wrong_answers: Vec<Prompts>) {
+        match wrong_answers.len() {
+            0 => println!("Well done, you answered everything correct"),
+            _ => {
+                println!(
+                    "You had {} wrong answers. The correct answers are:",
+                    wrong_answers.len()
+                );
+                wrong_answers
+                    .into_iter()
+                    .for_each(|p| println!("- {}: {}", p.question, p.answer));
+            }
+        }
+    }
 }
