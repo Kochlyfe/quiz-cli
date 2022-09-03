@@ -1,7 +1,7 @@
-mod latency;
+mod dialogues;
 
 pub mod test {
-    use crate::latency::latency_questions;
+    use crate::dialogues::latency;
     use crate::Prompts;
     use clap::Parser;
 
@@ -14,7 +14,7 @@ pub mod test {
     impl Mode {
         pub fn generate(&self) -> Vec<Prompts> {
             match self {
-                Mode::Latency => return latency_questions(),
+                Mode::Latency => return latency::latency_questions(),
                 Mode::Po2 => return vec![],
             }
         }
